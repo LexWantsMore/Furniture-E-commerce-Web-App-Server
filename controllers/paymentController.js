@@ -31,7 +31,7 @@ const PaymentsController = async (req, res, next) => {
         PartyB: shortCode,
         PhoneNumber: `254${phone}`,
         CallBackURL:
-          'https://b5c8-102-216-69-40.in.ngrok.io/callback',
+          'https://fur-niture-web-store.onrender.com/callback',
         AccountReference: `254${phone}`,
         TransactionDesc: 'Fur.Niture Web Store',
       },

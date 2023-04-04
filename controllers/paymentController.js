@@ -1,5 +1,7 @@
 const express = require('express');
 const axios = require('axios');
+const { generateToken } = require('../middlewares/paymentMiddleware');
+
 const PaymentsController = async (req, res, next) => {
   const phone = req.body.phone.substring(1);
   const amount = req.body.totalPrice;
@@ -18,6 +20,8 @@ const PaymentsController = async (req, res, next) => {
   const password = new Buffer.from(shortCode + passKey + timeStamp).toString(
     'base64'
   );
+  const token = await generateToken();
+
   await axios
     .post(
       'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest',
@@ -31,7 +35,7 @@ const PaymentsController = async (req, res, next) => {
         PartyB: shortCode,
         PhoneNumber: `254${phone}`,
         CallBackURL:
-          'https://fur-niture-web-store.onrender.com/callback',
+          'https://5af1-102-216-69-40.in.ngrok.io/callback',
         AccountReference: `254${phone}`,
         TransactionDesc: 'Fur.Niture Web Store',
       },

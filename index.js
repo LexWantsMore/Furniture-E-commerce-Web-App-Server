@@ -51,7 +51,6 @@ app.use((err, req, res, next) => {
     message: errorMessage,
   });
 });
-
 app.post('/callback', (req, res) => {
   const callbackData = req.body;
   console.log(callbackData);

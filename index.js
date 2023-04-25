@@ -29,6 +29,7 @@ const {
 const Transactions = require('./models/Transactions');
 app.use(morgan('dev'));
 app.use(cors());
+
 //body parser for post requests
 app.use(express.json({ limit: '30mb', extended: true }));
 //body parser for  html post form
@@ -41,7 +42,7 @@ app.use('/api/v1/transactions', transactionsRouter);
 app.use('/api/v1/geography', geography);
 app.use('/api/v1/overallstats', OverallStats);
 app.use('/api/v1/dashboard', dashboardStats);
-app.use('/api/v1/payments', paymentRouter);
+app.use('/api/v1/payments/stk', paymentRouter);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
@@ -51,6 +52,11 @@ app.use((err, req, res, next) => {
     message: errorMessage,
   });
 });
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD"); 
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content- Type, Accept");
+  next();
+  });
 app.post('/callback', (req, res) => {
   const callbackData = req.body;
   console.log(callbackData);

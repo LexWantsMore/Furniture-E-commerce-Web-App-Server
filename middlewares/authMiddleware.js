@@ -10,7 +10,7 @@ const verfyToken = (req, res, next) => {
   }
   jwt.verify(token, secret, (err, user) => {
     if (err) {
-      return next(createError(402, 'Token Not Valid'));
+      return next(createError(402, 'Token not valid'));
     }
     req.user = user;
     next();
@@ -22,7 +22,7 @@ const verifyUser = (req, res, next) => {
     if (req.user.id === req.params.id || req.user.role === 'admin') {
       next();
     } else {
-      return next(createError(403, 'You are not Authorised!'));
+      return next(createError(403, 'You are not authorised!'));
     }
   });
 };
@@ -32,7 +32,7 @@ const verifyAdmin = (req, res, next) => {
       next();
     } else {
       return next(
-        createError(403, 'You are not authorised to perform such an operation')
+        createError(403, 'You are not authorised to perform such an operation!')
       );
     }
   });

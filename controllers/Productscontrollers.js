@@ -49,7 +49,7 @@ const getFilteredProducts = async (req, res, next) => {
     });
     res.status(200).json({ total, limit, page: page + 1, products });
   } catch (error) {
-    res.status(404).json({ message: 'Something went Wrong ' });
+    res.status(404).json({ message: 'Something went wrong!' });
   }
 };
 

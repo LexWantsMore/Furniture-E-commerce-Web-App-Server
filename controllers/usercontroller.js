@@ -11,7 +11,7 @@ const signup = async (req, res, next) => {
 
   try {
     if (!firstName && !lastName && !password && !email && !phone) {
-      return next(createError(404, 'Please Fill in all the credentials'));
+      return next(createError(404, 'Please fill in all the credentials'));
     }
 
     const existingUser = await User.findOne({ email });
@@ -48,12 +48,12 @@ const signin = async (req, res, next) => {
   const { password, email } = req.body;
   try {
     if (!password && !email) {
-      return next(createError(404, 'Please Fill in all the credentials'));
+      return next(createError(404, 'Please fill in all the credentials'));
     }
     const oldUser = await User.findOne({ email: email });
 
     if (!oldUser) {
-      return next(createError(404, 'No user With such an Email'));
+      return next(createError(404, 'No user with such an email exists'));
     }
 
     const decryptedPassword = await bcryptjs.compare(
@@ -61,7 +61,7 @@ const signin = async (req, res, next) => {
       oldUser.password
     );
     if (!decryptedPassword) {
-      return next(createError(404, 'Password Dont,t Match'));
+      return next(createError(404, 'Password doesn,t match'));
     }
     const token = jwt.sign(
       {
@@ -91,7 +91,7 @@ const getUserall = async (req, res, next) => {
   try {
     const user = await User.find();
     if (!user) {
-      return next(createError(404, 'No User In the Database'));
+      return next(createError(404, 'No such user in the database'));
     }
     res.status(200).json(user);
   } catch (error) {
@@ -102,10 +102,10 @@ const deleteUser = async (req, res, next) => {
   const { id } = req.params;
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return next(createError(404, `No User exists with the id:${id}`));
+      return next(createError(404, `No user exists with the id:${id}`));
     }
     await User.findByIdAndDelete(id);
-    res.status(200).json({ message: 'User deleted Succesfully' });
+    res.status(200).json({ message: 'User deleted succesfully!' });
   } catch (error) {
     console.log(error);
     next(error);
@@ -113,18 +113,18 @@ const deleteUser = async (req, res, next) => {
 };
 const updateAccount = async (req, res, next) => {
   const { id } = req.params;
-  const { firstName, county, city, lastName, password, email, phone } =
+  const { firstName, country, city, lastName, password, email, phone } =
     req.body;
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return next(createError(404, `No User exists with the id:${id}`));
+      return next(createError(404, `No user exists with the id:${id}`));
     }
 
     const hashedPassword = await bcryptjs.hash(password, 10);
     const updatedDetails = {
       email,
       name: `${firstName} ${lastName}`,
-      county,
+      country,
       city,
       password: hashedPassword,
       phoneNumber: phone,

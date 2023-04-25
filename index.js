@@ -52,11 +52,7 @@ app.use((err, req, res, next) => {
     message: errorMessage,
   });
 });
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD"); 
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content- Type, Accept");
-  next();
-  });
+
 app.post('/callback', (req, res) => {
   const callbackData = req.body;
   console.log(callbackData);
